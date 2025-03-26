@@ -14,7 +14,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
 
     @Override
-    public void createProduct(ProductRequest productRequest) {
+    public Product createProduct(ProductRequest productRequest) {
         // Create product entity
         Product product = Product.builder()
                 .name(productRequest.name())
@@ -25,5 +25,7 @@ public class ProductServiceImpl implements ProductService {
         // Save product to repository
         productRepository.save(product);
         log.info("Product created successfully: {}", product);
+
+        return product;
     }
 }
