@@ -1,12 +1,12 @@
 package io.michaeljgkopp.github.microservices.product.service;
 
 import io.michaeljgkopp.github.microservices.product.dto.ProductRequest;
-import io.michaeljgkopp.github.microservices.product.model.Product;
+import io.michaeljgkopp.github.microservices.product.dto.ProductResponse;
 
 import java.util.List;
 
 public interface ProductService {
-    Product createProduct(ProductRequest productRequest);
+    ProductResponse createProduct(ProductRequest productRequest);
 
-    List<Product> getAllProducts();
+    List<ProductResponse> getAllProducts();
 }
