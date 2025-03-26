@@ -13,3 +13,7 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
       - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+# avoid permission issues
+volumes:
+  mysql:
