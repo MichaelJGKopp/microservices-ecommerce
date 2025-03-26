@@ -1,0 +1,18 @@
+# Container for mongodb
+# cmd: docker compose up -d
+
+#version: '4' obsolete
+services:
+  mongodb:
+    image: mongo:7.0.5
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_USERNAME=password
+      - MONGO_INITDB_DATABASE=product-service
+    volumes:
+      - ./data:/data/db
+#    networks:
+#      - my_network
