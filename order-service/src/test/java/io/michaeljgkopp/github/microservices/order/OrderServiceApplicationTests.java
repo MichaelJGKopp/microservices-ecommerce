@@ -35,7 +35,7 @@ class OrderServiceApplicationTests {
                 .contentType("application/json")
                 .body(requestBody)
                 .when()
-                .post("/api/order")
+                .post("/api/orders")
                 .then()
                 .statusCode(201)
                 .body("id", Matchers.notNullValue())
