@@ -7,11 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Import;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Testcontainers
 class OrderServiceApplicationTests {
 
     @LocalServerPort
@@ -42,7 +40,7 @@ class OrderServiceApplicationTests {
                 .statusCode(201)
                 .body("id", Matchers.notNullValue())
                 .body("orderNumber", Matchers.equalTo("123456"))
-                .body("skuCode", Matchers.equalTo("skuCode"))
+                .body("skuCode", Matchers.matchesPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"))
                 .body("price", Matchers.equalTo(1000))
                 .body("quantity", Matchers.equalTo(2));
     }
