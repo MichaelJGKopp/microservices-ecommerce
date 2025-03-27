@@ -4,6 +4,7 @@ import io.michaeljgkopp.github.microservices.inventory.repository.InventoryRepos
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class InventoryServiceImpl implements InventoryService {
     private final InventoryRepository inventoryRepository;
 
+    @Transactional(readOnly = true)
     @Override
     public boolean isInStock(String skuCode, Integer quantity) {
         boolean isInStock = inventoryRepository.existsBySkuCodeAndQuantityIsGreaterThanEqual(skuCode, quantity);
