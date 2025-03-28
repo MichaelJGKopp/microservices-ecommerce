@@ -9,11 +9,19 @@ services:
       MYSQL_ROOT_PASSWORD: mysql
     ports:
       - "3307:3306"
-# 3306 occupied already
+    # 3306 occupied already
     volumes:
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
       - ./docker/mysql/data:/var/lib/mysql
+    networks:
+      - microservices-ecommerce
+    restart: always
 
-# avoid permission issues
-#volumes:
+  # avoid permission issues
+  #volumes:
   #mysql:
+
+  # Define the network
+networks:
+  microservices-ecommerce:
+    driver: bridge

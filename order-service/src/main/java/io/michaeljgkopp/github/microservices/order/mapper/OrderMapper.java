@@ -13,8 +13,8 @@ public class OrderMapper {
 
     public Order toEntity(OrderRequest request) {
         return Order.builder()
-                .orderNumber(request.orderNumber())
-                .skuCode(UUID.randomUUID().toString())
+                .orderNumber(UUID.randomUUID().toString())
+                .skuCode(request.skuCode())
                 .price(request.price())
                 .quantity(request.quantity())
                 .build();

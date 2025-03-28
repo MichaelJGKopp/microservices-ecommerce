@@ -25,7 +25,7 @@ class OrderServiceApplicationTests {
     void shouldCreateOrder() {
         String requestBody = """
                 {
-                    "orderNumber": "123456",
+                    "skuCode": "iphone_15",
                     "price": 1000,
                     "quantity": 2
                 }
@@ -39,8 +39,8 @@ class OrderServiceApplicationTests {
                 .then()
                 .statusCode(201)
                 .body("id", Matchers.notNullValue())
-                .body("orderNumber", Matchers.equalTo("123456"))
-                .body("skuCode", Matchers.matchesPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"))
+                .body("orderNumber", Matchers.matchesPattern("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"))
+                .body("skuCode", Matchers.equalTo("iphone_15"))
                 .body("price", Matchers.equalTo(1000))
                 .body("quantity", Matchers.equalTo(2));
     }
