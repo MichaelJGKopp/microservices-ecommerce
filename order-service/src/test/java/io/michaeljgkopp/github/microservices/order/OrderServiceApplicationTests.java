@@ -1,15 +1,18 @@
 package io.michaeljgkopp.github.microservices.order;
 
+import io.michaeljgkopp.github.microservices.order.stubs.InventoryClientStub;
 import io.restassured.RestAssured;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.context.annotation.Import;
 
 @Import(TestcontainersConfiguration.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWireMock(port = 0)    // random port for wiremock server
 class OrderServiceApplicationTests {
 
     @LocalServerPort
@@ -30,6 +33,9 @@ class OrderServiceApplicationTests {
                     "quantity": 2
                 }
                 """;
+
+        // Mock the response from the inventory service
+        InventoryClientStub.stubInventoryCall("iphone_15", 2);
 
         RestAssured.given()
                 .contentType("application/json")
