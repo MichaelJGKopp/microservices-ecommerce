@@ -16,5 +16,5 @@ services:
       - ./docker/mysql/data:/var/lib/mysql
 
 # avoid permission issues
-volumes:
-  mysql:
+#volumes:
+  #mysql:
