@@ -6,6 +6,7 @@ services:
     image: mysql:8.3.0
     container_name: mysql
     environment:
+      # MYSQL_DATABASE: orders_db  # Creates the database
       MYSQL_ROOT_PASSWORD: mysql
     ports:
       - "3307:3306"
