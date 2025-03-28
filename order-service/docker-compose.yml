@@ -11,8 +11,8 @@ services:
       - "3307:3306"
 # 3306 occupied already
     volumes:
-      - ./mysql:/var/lib/mysql
-      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./docker/mysql/data:/var/lib/mysql
 
 # avoid permission issues
 volumes:
