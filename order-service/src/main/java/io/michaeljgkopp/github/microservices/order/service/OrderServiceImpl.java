@@ -4,7 +4,7 @@ import io.michaeljgkopp.github.microservices.order.dto.OrderRequest;
 import io.michaeljgkopp.github.microservices.order.dto.OrderResponse;
 import io.michaeljgkopp.github.microservices.order.mapper.OrderMapper;
 import io.michaeljgkopp.github.microservices.order.model.Order;
-import io.michaeljgkopp.github.microservices.order.proxy.InventoryServiceProxy;
+import io.michaeljgkopp.github.microservices.order.client.InventoryClient;
 import io.michaeljgkopp.github.microservices.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,14 +19,14 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
-    private final InventoryServiceProxy inventoryServiceProxy;
+    private final InventoryClient inventoryClient;
 
 
     @Transactional
     @Override
     public Order placeOrder(OrderRequest orderRequest) {
         Order order = orderMapper.toEntity(orderRequest);
-        if (!inventoryServiceProxy.isInStock(order.getSkuCode(), order.getQuantity())) {
+        if (!inventoryClient.isInStock(order.getSkuCode(), order.getQuantity())) {
             log.error("Not enough inventory, quantity for SKU: {} smaller than {}",
                     order.getSkuCode(), order.getQuantity());
             throw new RuntimeException( // ToDo: Create a custom exception with ResponseStatus
