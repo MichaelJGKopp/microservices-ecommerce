@@ -30,6 +30,13 @@ public class ProductController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProductResponse> getAllProducts() {
+//        System.out.println("Getting all products...");
+//        // Simulate slowly running API
+//        try {
+//            Thread.sleep(5_000); // Simulate a long-running process);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
         return productService.getAllProducts();
     }
 }
