@@ -63,11 +63,11 @@ services:
       - "8086:8080"
     depends_on:
       - broker
-      - schema-registry
+#      - schema-registry TODO: turn back on when we use schema registry
     environment:
       KAFKA_CLUSTERS_NAME: local
       KAFKA_CLUSTERS_BOOTSTRAPSERVERS: broker:29092
-      KAFKA_CLUSTERS_SCHEMAREGISTRY: http://schema-registry:8081
+#      KAFKA_CLUSTERS_SCHEMAREGISTRY: http://schema-registry:8081 TODO: turn back on when we use schema registry
       DYNAMIC_CONFIG_ENABLED: 'true'
 
   # Define the network
