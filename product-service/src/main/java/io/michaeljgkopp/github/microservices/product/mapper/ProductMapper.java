@@ -12,6 +12,7 @@ public class ProductMapper {
         return Product.builder()
                 .name(request.name())
                 .description(request.description())
+                .skuCode(request.skuCode())
                 .price(request.price())
                 .build();
     }
@@ -21,6 +22,7 @@ public class ProductMapper {
                 .id(product.getId())
                 .name(product.getName())
                 .description(product.getDescription())
+                .skuCode(product.getSkuCode())
                 .price(product.getPrice())
                 .build();
     }
