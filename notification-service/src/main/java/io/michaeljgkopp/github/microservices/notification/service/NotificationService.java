@@ -1,6 +1,6 @@
 package io.michaeljgkopp.github.microservices.notification.service;
 
-import io.michaeljgkopp.github.microservices.notification.order.OrderPlacedEvent;
+import io.michaeljgkopp.github.microservices.order.event.OrderPlacedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

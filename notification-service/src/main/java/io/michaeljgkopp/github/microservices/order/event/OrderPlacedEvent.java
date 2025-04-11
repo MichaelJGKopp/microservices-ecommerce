@@ -1,4 +1,4 @@
-package io.michaeljgkopp.github.microservices.notification.order;
+package io.michaeljgkopp.github.microservices.order.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
