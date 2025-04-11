@@ -2,12 +2,14 @@ package io.michaeljgkopp.github.microservices.order.service;
 
 import io.michaeljgkopp.github.microservices.order.dto.OrderRequest;
 import io.michaeljgkopp.github.microservices.order.dto.OrderResponse;
+import io.michaeljgkopp.github.microservices.order.event.OrderPlacedEvent;
 import io.michaeljgkopp.github.microservices.order.mapper.OrderMapper;
 import io.michaeljgkopp.github.microservices.order.model.Order;
 import io.michaeljgkopp.github.microservices.order.client.InventoryClient;
 import io.michaeljgkopp.github.microservices.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
     private final InventoryClient inventoryClient;
+    private final KafkaTemplate<String, OrderPlacedEvent> kafkaTemplate;    // key: Topic name, value: Event
 
 
     @Transactional
@@ -33,7 +36,17 @@ public class OrderServiceImpl implements OrderService {
                     "Not enough inventory, quantity for SKU: %s smaller than %d"
                     .formatted(order.getSkuCode(), order.getQuantity()));
         }
-        return orderRepository.save(order);
+        order = orderRepository.save(order);
+
+        // send the message to Kafka Topic -> email service, sending out email
+        OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent(
+                order.getOrderNumber(),
+                orderRequest.userDetails().email());
+        log.info("Start - Sending OrderPlacedEvent {} to Kafka topic order-placed", orderPlacedEvent);
+        kafkaTemplate.send("order-placed", orderPlacedEvent);
+        log.info("End - Sending OrderPlacedEvent {} to Kafka topic order-placed", orderPlacedEvent);
+
+        return order;
     }
 
     @Override
