@@ -71,6 +71,6 @@ services:
       DYNAMIC_CONFIG_ENABLED: 'true'
 
   # Define the network
-networks:
-  microservices-ecommerce:
-    driver: bridge
+#networks:
+  #microservices-ecommerce:
+   # driver: bridge
