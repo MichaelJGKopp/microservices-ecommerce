@@ -39,9 +39,14 @@ public class OrderServiceImpl implements OrderService {
         order = orderRepository.save(order);
 
         // send the message to Kafka Topic -> email service, sending out email
-        OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent(
-                order.getOrderNumber(),
-                orderRequest.userDetails().email());
+
+        // Create OrderPlacedEvent
+        OrderPlacedEvent orderPlacedEvent = new OrderPlacedEvent();
+        orderPlacedEvent.setOrderNumber(order.getOrderNumber());
+        orderPlacedEvent.setEmail(orderRequest.userDetails().email());
+        orderPlacedEvent.setFirstName(orderRequest.userDetails().firstName());
+        orderPlacedEvent.setLastName(orderRequest.userDetails().lastName());
+
         log.info("Start - Sending OrderPlacedEvent {} to Kafka topic order-placed", orderPlacedEvent);
         kafkaTemplate.send("order-placed", orderPlacedEvent);
         log.info("End - Sending OrderPlacedEvent {} to Kafka topic order-placed", orderPlacedEvent);
